@@ -3,11 +3,14 @@ extends layout
 block content
 	h1 #{title}: #{book.title}
 
-	p #[strong Author:]
+	p #[strong Author:]&nbsp;
 		a(href=book.author.url) #{book.author.name}
 	p #[strong Summary:] #{book.summary}
 	p #[strong ISBN:] #{book.isbn}
-	p #[strong Genre:]&nbsp;!{book.genre_list}
+	p #[strong Genre:]&nbsp;
+		each val in book.genre
+			a(href=val.url) #{val.name}
+			| &nbsp;
 
 	div(style='margin-left:20px;margin-top:20px')
 		h4 Copies
