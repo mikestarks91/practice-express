@@ -16,7 +16,7 @@ exports.author_list = function(req,res,next){
 };
 
 // Display detail page for a specific Author
-exports.author_detail = function(req, res) {
+exports.author_detail = function(req,res,next) {
 	var id = mongoose.Types.ObjectId(req.params.id.trim());
 
 	async.parallel({
@@ -32,7 +32,7 @@ exports.author_detail = function(req, res) {
 			.exec(callback)
 		}
 	}, function(err,results){
-		if(err) return results;
+		if(err) return next(results);
 		res.render('author_detail', {title: 'Author Detail', author: results.author, author_books: results.authors_books});
 	});
 };
