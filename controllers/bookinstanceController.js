@@ -1,4 +1,5 @@
 var BookInstance = require('../models/bookinstance');
+var Book = require('../models/book');
 var mongoose = require('mongoose');
 
 // Display list of all BookInstances

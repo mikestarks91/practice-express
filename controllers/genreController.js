@@ -42,7 +42,7 @@ exports.genre_create_get = function(req,res,next) {
 };
 
 // Handle Genre create on POST
-exports.genre_create_post = function(req, res) {
+exports.genre_create_post = function(req,res,next) {
 	//Check that name is not empty
 	req.checkBody('name', 'Genre name required').notEmpty();
 

@@ -8,6 +8,7 @@ var Schema = mongoose.Schema;
 var AuthorSchema = Schema({
 	first_name: {type: String, required: true, max: 100},
 	family_name: {type: String, required: true, max: 100},
+	nicknames: [{type: String}],
 	date_of_birth: {type: Date},
 	date_of_death: {type: Date}
 });
