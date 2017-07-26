@@ -24,6 +24,10 @@ block content
 
 		p#author-genres
 
+	hr
+	p
+		a(href=author.url+'/delete') Delete author
+
 	script(type="text/javascript") var author_books = !{JSON.stringify(JSON.stringify(author_books).replace(/<\//g, '<\\/'))}
 
 	script(type="text/javascript", src="/javascripts/test.js")
