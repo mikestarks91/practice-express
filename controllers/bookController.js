@@ -143,12 +143,23 @@ exports.book_create_post = function(req,res,next) {
 };
 
 // Display book delete form on GET
-exports.book_delete_get = function(req, res) {
-	res.send('NOT IMPLEMENTED: Book delete GET');
+exports.book_delete_get = function(req,res,next) {
+	var id = mongoose.Types.ObjectId(req.params.id.trim());
+	async.parallel({
+		book: function(callback){
+			Book.findById(id).exec(callback);
+		},
+		book_instances: function(callback){
+			BookInstance.find({'book': id}).exec(callback);
+		}
+	}, function(err,results){
+		if(err) return next(err);
+		res.render('book_delete', {title: 'Delete Book', book: results.book, book_instances: results.book_instances});
+	});
 };
 
 // Handle book delete on POST
-exports.book_delete_post = function(req, res) {
+exports.book_delete_post = function(req,res,next) {
 	res.send('NOT IMPLEMENTED: Book delete POST');
 };
 
