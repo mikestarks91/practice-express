@@ -145,6 +145,7 @@ exports.book_create_post = function(req,res,next) {
 // Display book delete form on GET
 exports.book_delete_get = function(req,res,next) {
 	var id = mongoose.Types.ObjectId(req.params.id.trim());
+
 	async.parallel({
 		book: function(callback){
 			Book.findById(id).exec(callback);
@@ -160,7 +161,27 @@ exports.book_delete_get = function(req,res,next) {
 
 // Handle book delete on POST
 exports.book_delete_post = function(req,res,next) {
-	res.send('NOT IMPLEMENTED: Book delete POST');
+	var id = mongoose.Types.ObjectId(req.body.bookid.trim());
+
+	async.parallel({
+		book: function(callback){
+			Book.findById(id).exec(callback);
+		},
+		book_instances: function(callback){
+			BookInstance.find({'book': id}).exec(callback);
+		}
+	}, function(err,results){
+		if(err) return next(err);
+		if(results.book_instances>0){
+			res.render('book_delete', {title: 'Delete Book', book: results.book, book_instances: results.book_instances});
+			return;
+		} else {
+			Book.findByIdAndRemove(id, function deleteBook(err){
+				if(err) return next(err);
+				res.redirect('/catalog/books');
+			});
+		}
+	});
 };
 
 // Display book update form on GET
